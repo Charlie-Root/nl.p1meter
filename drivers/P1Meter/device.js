@@ -33,6 +33,8 @@ class MyDevice extends Homey.Device {
     }
     testPoll() {
         this.log('polling url' + this._url);
+        
+        var bla = this;
 
         request({
             url: this._url,
@@ -41,10 +43,14 @@ class MyDevice extends Homey.Device {
         
             if (!error && response.statusCode === 200) {
                 
-                var data = JSON.parse(body);
-                console.log(data);
+                console.log();
                 
-                
+                var oGas = bla.getCapabilityValue('measure_gas');
+                var cGas = (body.gas.reading - oGas);
+                bla.setCapabilityValue('measure_power', (body.electricity.received.actual.reading / 1000));
+                bla.setCapabilityValue('measure_gas', cGas);
+                bla.setCapabilityValue('meter_gas', body.gas.reading);
+                bla.setCapabilityValue('meter_power', body.electricity.received.tariff1.reading + body.electricity.received.tariff2.reading);
 
             }
             
