@@ -4,13 +4,11 @@
     function testSettings () {
         // variables
         var host = document.getElementById( 'host' ).value;
-        var smileId = document.getElementById( 'smileId' ).value;
-        if ((host != '') && (smileId != '')) {
+        var path = document.getElementById( 'path' ).value;
+        if ((host != '') && (path != '')) {
             var settings = {
-                smileIp: host,
-                smileId: smileId,
-                ledring_usage_limit : 3000,
-                ledring_production_limit : 3000,
+                BASE_URL: host,
+                BASE_PATH: path
             };
             // Continue to back-end, pass along data
             Homey.emit( 'validate', settings, function( err, result ){
@@ -20,8 +18,8 @@
                 } else {
                     Homey.alert(__('pair.success')+ result, 'info');
                     var device = {
-                        name: `Smile_${settings.smileId}`,
-                        data: { id: settings.smileId },
+                        name: `P1 Meter ${settings.BASE_URL}`,
+                        data: { id: settings.BASE_URL },
                         settings: settings
                     };
                     Homey.addDevice(device, function( err, result ){
@@ -45,11 +43,11 @@
             <table class="pairSettings">
                 <tr>
                     <td style="width:100px;" data-i18n="pair.host">host</td>
-                    <td><input id="host" type="text" value="" placeholder="e.g. 192.168.1.1"/></td>
+                    <td><input id="host" type="text" value="" placeholder="e.g. http://10.0.1.205"/></td>
                 </tr>
                 <tr>
-                    <td style="width:100px;" data-i18n="pair.smileId">host</td>
-                    <td><input id="smileId" type="text" value="" placeholder="Smile ID (e.g. bcdfghjk)"/></td>
+                    <td style="width:100px;" data-i18n="pair.path">host</td>
+                    <td><input id="path" type="text" value="" placeholder="/results.txt)"/></td>
                 </tr>
             </table>
     

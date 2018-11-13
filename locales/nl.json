@@ -1,0 +1,19 @@
+{
+	"pair": {
+		"title": "Device toevoegen",
+		"intro": "Voer de basis URL in van uw locale installatie",
+		"host": "IP adres of hostnaam",
+		"path": "PATH",
+		"smileId": "File output",
+		"required": "Het IP adres en SmileID zijn verplicht",
+		"testSettings": "Opslaan",
+		"success": "Succes!"
+	},
+	"settings": {
+		"app": {
+			"title": "Plugwise Smile P1 Debug Logs",
+			"logs": "Logs",
+			"getlogs": "Logs verversen"
+		}
+	}
+}

@@ -9,9 +9,26 @@
   "description": {
     "en": "Adds support for custom P1 script for smart meters"
   },
-  "category": [
-    "energy"
-  ],
+  "category": ["tools","appliances", "energy"],
+  "capabilities": {
+    "measure_gas": {
+      "type": "number",
+      "title": {
+        "en": "Gas",
+        "nl": "Gas"
+      },
+      "desc": {
+        "en": "Gas usage (previous hour)",
+        "nl": "Gasverbruik (vorige uur)"
+      },
+      "units": {
+        "en": "m\u00B3",
+        "nl": "m\u00B3"
+      },
+      "getable": true,
+      "setable": false
+    }
+  },
   "permissions": [],
   "images": {
     "large": "/assets/images/large.png",
@@ -21,6 +38,7 @@
     "name": "Wieger Bontekoe",
     "email": "wieger@skynet-ict.nl"
   },
+  
   "drivers": [
     {
         "id": "P1Meter",
@@ -29,21 +47,72 @@
             "nl": "P1Meter"
         },
         "class": "sensor",
-        "capabilities": [ "meter_gas", "meter_power" ],
+        "capabilities": [
+          "measure_power",
+          "measure_gas",
+          "meter_gas",
+          "meter_power"
+        ],
         "pair": [
             {
-                "id": "pair",
-                "template": "list_devices",
-                "navigation": {
-                    "next": "add_devices"
-                }
-            },
-            {
-                "id": "add_devices",
-                "template": "add_devices"
+                "id": "pair"
+                
             }
+        ],
+        
+        "settings": [
+          {
+            "type": "group",
+            "label": {
+              "en": "Device information",
+              "nl": "Device informatie"
+            },
+            "children": [
+              {
+                "id": "base_url_label",
+                "type": "label",
+                "label": {
+                  "en": "BASE URL",
+                  "nl": "BASE URL"
+                },
+                "value": "bcdfghjk"
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "label": {
+              "en": "Connection",
+              "nl": "Verbinding"
+            },
+            "children": [
+              {
+                "id": "base_url",
+                "type": "text",
+                "label": {
+                  "en": "URL or IP address",
+                  "nl": "URL of IP adres"
+                },
+                "value": "http://10.0.1.205"
+              },
+              {
+                "id": "pollingInterval",
+                "type": "number",
+                "label": {
+                  "en": "Polling interval (s)",
+                  "nl": "Polling interval (s)"
+                },
+                "attr": { "min": 10 },
+                "value": 10
+              }
+            ]
+          }
+          
         ]
+      }
+    ]
+  
         
     }
-  ]
-}
+  
+

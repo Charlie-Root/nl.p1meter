@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+var request = require("request");
 
 class MyDevice extends Homey.Device {
 
@@ -9,9 +10,16 @@ class MyDevice extends Homey.Device {
         this.log('device init');
         this.log('name:', this.getName());
         this.log('class:', this.getClass());
+        
+        var s = this.getSettings();
+        console.log(s["base_url"]);
+        this.log('Base URL: ' + this.getSetting("BASE_URL") + this.getSetting('BASE_PATH') );
 
-        // register a capability listener
-        this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this))
+        this._url = this.getSetting("BASE_URL") + this.getSetting('BASE_PATH');
+
+        const POLL_INTERVAL = 30000;
+        this._pollDataInterval = setInterval(this.testPoll.bind(this), POLL_INTERVAL);
+        
     }
 
     // this method is called when the Device is added
@@ -23,7 +31,25 @@ class MyDevice extends Homey.Device {
     onDeleted() {
         this.log('device deleted');
     }
+    testPoll() {
+        this.log('polling url' + this._url);
 
+        request({
+            url: this._url,
+            json: true
+        }, function (error, response, body) {
+        
+            if (!error && response.statusCode === 200) {
+                console.log(body) // Print the json response
+                console.log(JSON.parse(body));
+                
+                
+
+            }
+            
+        })
+
+    }
     // this method is called when the Device has requested a state change (turned on or off)
     onCapabilityOnoff( value, opts, callback ) {
 
