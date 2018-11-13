@@ -43,12 +43,14 @@ class MyDevice extends Homey.Device {
         
             if (!error && response.statusCode === 200) {
                 
-                console.log();
-                
-                var oGas = bla.getCapabilityValue('measure_gas');
-                var cGas = (body.gas.reading - oGas);
-                bla.setCapabilityValue('measure_power', (body.electricity.received.actual.reading / 1000));
-                bla.setCapabilityValue('measure_gas', cGas);
+               
+
+                const gasNew = Number(body.gas.reading);
+                const gasOld = Number(bla.getCapabilityValue('measure_gas'));
+
+                console.log('gas old/new/diff: ' + gasOld + ' / ' + gasNew + ' / ' + (gasNew - gasOld));
+                bla.setCapabilityValue('measure_power', body.electricity.received.actual.reading*1000);
+                bla.setCapabilityValue('measure_gas', (gasNew - gasOld));
                 bla.setCapabilityValue('meter_gas', body.gas.reading);
                 bla.setCapabilityValue('meter_power', body.electricity.received.tariff1.reading + body.electricity.received.tariff2.reading);
 
