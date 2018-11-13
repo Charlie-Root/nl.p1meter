@@ -40,9 +40,9 @@ class MyDevice extends Homey.Device {
         }, function (error, response, body) {
         
             if (!error && response.statusCode === 200) {
-                console.log(body) // Print the json response
-                data = JSON.parse(body);
-                console.log(data.electricity);
+                
+                var data = JSON.parse(body);
+                console.log(data);
                 
                 
 
