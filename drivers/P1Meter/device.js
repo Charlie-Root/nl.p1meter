@@ -46,11 +46,17 @@ class MyDevice extends Homey.Device {
                
 
                 const gasNew = Number(body.gas.reading);
-                const gasOld = Number(bla.getCapabilityValue('measure_gas'));
-
+                const gasOld = Number(bla.getCapabilityValue('meter_gas'));
+                
+                if(gasOld > 0) {
+                    var gasDiff = (gasNew - gasOld);
+                }
+                else {
+                    var gasDiff = 0;
+                }
                 console.log('gas old/new/diff: ' + gasOld + ' / ' + gasNew + ' / ' + (gasNew - gasOld));
                 bla.setCapabilityValue('measure_power', body.electricity.received.actual.reading*1000);
-                bla.setCapabilityValue('measure_gas', (gasNew - gasOld));
+                bla.setCapabilityValue('measure_gas', gasDiff);
                 bla.setCapabilityValue('meter_gas', body.gas.reading);
                 bla.setCapabilityValue('meter_power', body.electricity.received.tariff1.reading + body.electricity.received.tariff2.reading);
 
