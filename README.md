@@ -12,3 +12,6 @@ https://github.com/Charlie-Root/node-p1-reader (forked from jorith88)
 
 You can alter the 'example.js' to output the array as json to a txt file that can be accessed by Homey 
 
+# Version history
+
+* 1.0.0 - beta
