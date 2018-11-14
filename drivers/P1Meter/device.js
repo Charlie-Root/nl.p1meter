@@ -39,6 +39,7 @@ class MyDevice extends Homey.Device {
     onDeleted() {
         this.log('device deleted');
     }
+
     dataPoller() {
         this.log('polling url' + this._url);
         
@@ -51,49 +52,60 @@ class MyDevice extends Homey.Device {
         
             if (!error && response.statusCode === 200) {
                 
-               
-                if(body.gas) {
-                    if(body.gas.reading) {
-                        var gasNew = Number(body.gas.reading);
-
-                    }
-                    else {
-                        var gasNew = 0;
-                    }
-                    
-                    var gasOld = Number(bla.getCapabilityValue('meter_gas'));
-
-                    if(gasOld > 0) {
-                        var gasDiff = (gasNew - gasOld);
-                    }
-                    else {
-                        var gasDiff = 0;
-                    }
-    
+                if(typeof body.gas === 'undefined'){
+                    console.log('no gas definition?');
+                    return;
                 }
                 else {
-                    var gasOld = 0;
-                    var gasNew = 0;
-                    var gasDiff = 0;
-                }
-                
-                console.log('gas old/new/diff: ' + gasOld + ' / ' + gasNew + ' / ' + (gasNew - gasOld));
-                
-                if(body.electricity.received.actual.reading){
-                    bla.setCapabilityValue('measure_power', body.electricity.received.actual.reading*1000);
-                }
-                bla.setCapabilityValue('measure_gas', gasDiff);
-                
-                
-                bla.setCapabilityValue('meter_gas', body.gas.reading);
-                
-                bla.setCapabilityValue('meter_power', body.electricity.received.tariff1.reading + body.electricity.received.tariff2.reading);
 
+                    if(body.gas) {
+                        if(body.gas.reading) {
+                            var gasNew = Number(body.gas.reading);
+
+                        }
+                        else {
+                            var gasNew = 0;
+                        }
+                        
+                        var gasOld = Number(bla.getCapabilityValue('meter_gas'));
+
+                        if(gasOld > 0) {
+                            var gasDiff = (gasNew - gasOld);
+                        }
+                        else {
+                            var gasDiff = 0;
+                        }
+        
+                    }
+                    else {
+                        var gasOld = 0;
+                        var gasNew = 0;
+                        var gasDiff = 0;
+                    }
+                    
+                    console.log('gas old/new/diff: ' + gasOld + ' / ' + gasNew + ' / ' + (gasNew - gasOld));
+                    
+                    if(body.electricity.received.actual.reading){
+                        bla.setCapabilityValue('measure_power', body.electricity.received.actual.reading*1000);
+                    }
+                    bla.setCapabilityValue('measure_gas', gasDiff);
+                    
+                    
+                    bla.setCapabilityValue('meter_gas', body.gas.reading);
+                    
+                    bla.setCapabilityValue('meter_power', body.electricity.received.tariff1.reading + body.electricity.received.tariff2.reading);
+                }
             }
             
         })
 
     }
+
+    updateValue(capability, value) {
+
+        this.setCapabilityValue(capability, value);
+    }
+
     // this method is called when the Device has requested a state change (turned on or off)
     onCapabilityOnoff( value, opts, callback ) {
 
