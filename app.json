@@ -64,18 +64,18 @@
           {
             "type": "group",
             "label": {
-              "en": "Device information",
-              "nl": "Device informatie"
+              "en": "Script information",
+              "nl": "Script informatie"
             },
             "children": [
               {
-                "id": "base_url_label",
-                "type": "label",
+                "id": "base_path",
+                "type": "text",
                 "label": {
-                  "en": "BASE URL",
-                  "nl": "BASE URL"
+                  "en": "BASE PATH",
+                  "nl": "BASE PATH"
                 },
-                "value": "bcdfghjk"
+                "value": "/results.txt"
               }
             ]
           },
@@ -103,7 +103,7 @@
                   "nl": "Polling interval (s)"
                 },
                 "attr": { "min": 10 },
-                "value": 10
+                "value": 30
               }
             ]
           }

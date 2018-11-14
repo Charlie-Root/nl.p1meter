@@ -17,8 +17,16 @@ class MyDevice extends Homey.Device {
 
         this._url = this.getSetting("BASE_URL") + this.getSetting('BASE_PATH');
 
-        const POLL_INTERVAL = 30000;
-        this._pollDataInterval = setInterval(this.testPoll.bind(this), POLL_INTERVAL);
+        if(this.getSetting("pollingInterval") > 0) {
+            const POLL_INTERVAL = this.getSetting("pollingInterval") * 1000;
+            this._pollDataInterval = setInterval(this.dataPoller.bind(this), POLL_INTERVAL);
+        }
+        else {
+            const POLL_INTERVAL = 60000;
+            this._pollDataInterval = setInterval(this.dataPoller.bind(this), POLL_INTERVAL);
+        }
+        
+        
         
     }
 
@@ -31,7 +39,7 @@ class MyDevice extends Homey.Device {
     onDeleted() {
         this.log('device deleted');
     }
-    testPoll() {
+    dataPoller() {
         this.log('polling url' + this._url);
         
         var bla = this;
@@ -44,20 +52,41 @@ class MyDevice extends Homey.Device {
             if (!error && response.statusCode === 200) {
                 
                
+                if(body.gas) {
+                    if(body.gas.reading) {
+                        var gasNew = Number(body.gas.reading);
 
-                const gasNew = Number(body.gas.reading);
-                const gasOld = Number(bla.getCapabilityValue('meter_gas'));
-                
-                if(gasOld > 0) {
-                    var gasDiff = (gasNew - gasOld);
+                    }
+                    else {
+                        var gasNew = 0;
+                    }
+                    
+                    var gasOld = Number(bla.getCapabilityValue('meter_gas'));
+
+                    if(gasOld > 0) {
+                        var gasDiff = (gasNew - gasOld);
+                    }
+                    else {
+                        var gasDiff = 0;
+                    }
+    
                 }
                 else {
+                    var gasOld = 0;
+                    var gasNew = 0;
                     var gasDiff = 0;
                 }
+                
                 console.log('gas old/new/diff: ' + gasOld + ' / ' + gasNew + ' / ' + (gasNew - gasOld));
-                bla.setCapabilityValue('measure_power', body.electricity.received.actual.reading*1000);
+                
+                if(body.electricity.received.actual.reading){
+                    bla.setCapabilityValue('measure_power', body.electricity.received.actual.reading*1000);
+                }
                 bla.setCapabilityValue('measure_gas', gasDiff);
+                
+                
                 bla.setCapabilityValue('meter_gas', body.gas.reading);
+                
                 bla.setCapabilityValue('meter_power', body.electricity.received.tariff1.reading + body.electricity.received.tariff2.reading);
 
             }
