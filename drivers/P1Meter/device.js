@@ -22,7 +22,7 @@ class MyDevice extends Homey.Device {
             this._pollDataInterval = setInterval(this.dataPoller.bind(this), POLL_INTERVAL);
         }
         else {
-            const POLL_INTERVAL = 60000;
+            const POLL_INTERVAL = 30000;
             this._pollDataInterval = setInterval(this.dataPoller.bind(this), POLL_INTERVAL);
         }
         
