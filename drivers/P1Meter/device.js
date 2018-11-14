@@ -52,8 +52,8 @@ class MyDevice extends Homey.Device {
         
             if (!error && response.statusCode === 200) {
                 
-                if(typeof body.gas === 'undefined'){
-                    console.log('no gas definition?');
+                if(typeof body === 'undefined'){
+                    console.log('no body returned?');
                     return;
                 }
                 else {
