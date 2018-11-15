@@ -56,6 +56,14 @@ class MyDevice extends Homey.Device {
                     console.log('no body returned?');
                     return;
                 }
+                else if(typeof body.gas === 'undefined'){
+                    console.log('no body returned?');
+                    return;
+                }
+                else if(typeof body.electricity === 'undefined'){
+                    console.log('no body returned?');
+                    return;
+                }
                 else {
 
                     if(body.gas) {
