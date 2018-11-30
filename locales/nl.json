@@ -8,12 +8,6 @@
 		"required": "Het IP adres en SmileID zijn verplicht",
 		"testSettings": "Opslaan",
 		"success": "Succes!"
-	},
-	"settings": {
-		"app": {
-			"title": "Plugwise Smile P1 Debug Logs",
-			"logs": "Logs",
-			"getlogs": "Logs verversen"
-		}
 	}
+	
 }

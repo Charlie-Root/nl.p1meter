@@ -4,11 +4,24 @@
   "compatibility": ">=1.5.0",
   "sdk": 2,
   "name": {
-    "en": "P1 Meter"
+    "en": "P1 Meter",
+    "NL": "P1 Meter"
   },
   "description": {
-    "en": "Adds support for custom P1 script for smart meters"
+    "en": "Adds support for custom P1 script for smart meters",
+    "nl": "Voegt ondersteuning voor op-maat P1 meting toe"
   },
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+},
+  "contributing": {
+    "donate": {
+        "paypal": {
+            "username": "my_paypal.wbontekoe"
+        }
+    }
+},
   "category": ["tools","appliances", "energy"],
   "capabilities": {
     "measure_gas": {
