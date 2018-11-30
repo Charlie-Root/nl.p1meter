@@ -59,6 +59,10 @@
             "en": "P1Meter",
             "nl": "P1Meter"
         },
+        "images": {
+          "large": "./drivers/P1Meter/assets/large.png",
+          "small": "./drivers/P1Meter/assets/small.png"
+        },
         "class": "sensor",
         "capabilities": [
           "measure_power",
